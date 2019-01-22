@@ -81,8 +81,7 @@ bool scene_intersect(const Vec3f &orig, const Vec3f &dir, const std::vector<Sphe
             checkerboard_dist = d;
             hit = pt;
             N = Vec3f(0,1,0);
-            material.diffuse_color = (int(.5*hit.x+1000) + int(.5*hit.z)) & 1 ? Vec3f(1,1,1) : Vec3f(1, .7, .3);
-            material.diffuse_color = material.diffuse_color*.3;
+            material.diffuse_color = (int(.5*hit.x+1000) + int(.5*hit.z)) & 1 ? Vec3f(.3, .3, .3) : Vec3f(.3, .2, .1);
         }
     }
     return std::min(spheres_dist, checkerboard_dist)<1000;
@@ -137,7 +136,7 @@ void render(const std::vector<Sphere> &spheres, const std::vector<Light> &lights
     }
 
     std::ofstream ofs; // save the framebuffer to file
-    ofs.open("./out.ppm");
+    ofs.open("./out.ppm",std::ios::binary);
     ofs << "P6\n" << width << " " << height << "\n255\n";
     for (size_t i = 0; i < height*width; ++i) {
         Vec3f &c = framebuffer[i];
